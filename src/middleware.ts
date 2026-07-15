@@ -35,7 +35,9 @@ export async function middleware(request: NextRequest) {
     pathname === "/" ||
     pathname.startsWith("/auth/callback") ||
     pathname.startsWith("/api/chat") ||
-    pathname.startsWith("/chat/");
+    pathname.startsWith("/chat/") ||
+    pathname.startsWith("/solutions") ||
+    pathname.startsWith("/faqs");
 
   if (!user && !isAuthRoute && !isPublicRoute) {
     const url = request.nextUrl.clone();
