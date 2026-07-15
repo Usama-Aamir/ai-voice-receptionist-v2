@@ -13,8 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Voice Receptionist",
-  description: "Operations dashboard for AI voice receptionist",
+  title: "Solmy — AI Receptionist for Malaysian Businesses",
+  description:
+    "Solmy answers customer messages and calls in English, Bahasa Malaysia, Tamil, and Chinese, then books appointments automatically.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

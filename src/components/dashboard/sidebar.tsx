@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/components/ui/logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -18,9 +19,7 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 z-10 flex h-full w-64 flex-col border-r border-border bg-surface">
       <div className="flex h-16 items-center border-b border-border px-6">
-        <span className="text-sm font-medium tracking-tight text-text-primary">
-          AI Voice Receptionist
-        </span>
+        <Logo variant="full" />
       </div>
 
       <nav className="flex-1 overflow-auto px-4 py-6">
