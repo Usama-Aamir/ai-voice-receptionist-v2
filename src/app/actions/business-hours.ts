@@ -24,7 +24,10 @@ async function getCurrentBusinessId() {
   return businessId;
 }
 
-export async function saveBusinessHours(formData: FormData) {
+export async function saveBusinessHours(
+  _prevState: { message: string; error: boolean },
+  formData: FormData
+) {
   const businessId = await getCurrentBusinessId();
   const supabase = await createClient();
 
@@ -49,13 +52,19 @@ export async function saveBusinessHours(formData: FormData) {
 
   if (error) {
     console.error(error);
+    return { error: true, message: `Could not save hours: ${error.message}` };
   }
 
-  revalidatePath("/(dashboard)/settings/hours", "page");
-  revalidatePath("/(dashboard)/settings", "page");
+  revalidatePath("/settings/hours", "page");
+  revalidatePath("/settings", "page");
+
+  return { error: false, message: "Business hours saved successfully." };
 }
 
-export async function addClosure(formData: FormData) {
+export async function addClosure(
+  _prevState: { message: string; error: boolean },
+  formData: FormData
+) {
   const businessId = await getCurrentBusinessId();
   const supabase = await createClient();
 
@@ -70,12 +79,19 @@ export async function addClosure(formData: FormData) {
 
   if (error) {
     console.error(error);
+    return { error: true, message: `Could not add closure: ${error.message}` };
   }
 
-  revalidatePath("/(dashboard)/settings/hours", "page");
+  revalidatePath("/settings/hours", "page");
+  revalidatePath("/settings", "page");
+
+  return { error: false, message: "Closed date added." };
 }
 
-export async function deleteClosure(formData: FormData) {
+export async function deleteClosure(
+  _prevState: { message: string; error: boolean },
+  formData: FormData
+) {
   const businessId = await getCurrentBusinessId();
   const supabase = await createClient();
 
@@ -89,7 +105,11 @@ export async function deleteClosure(formData: FormData) {
 
   if (error) {
     console.error(error);
+    return { error: true, message: `Could not remove closure: ${error.message}` };
   }
 
-  revalidatePath("/(dashboard)/settings/hours", "page");
+  revalidatePath("/settings/hours", "page");
+  revalidatePath("/settings", "page");
+
+  return { error: false, message: "Closed date removed." };
 }

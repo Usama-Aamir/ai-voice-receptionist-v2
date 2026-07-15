@@ -1,21 +1,9 @@
-import { updateBusiness } from "@/app/actions/business";
 import { cancelInvite, createInvite, getTeamMembers } from "@/app/actions/team";
+import { BusinessProfileForm } from "@/components/settings/business-profile-form";
 import { PublicChatLink } from "@/components/settings/public-chat-link";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
-const timezones = [
-  "Asia/Kuala_Lumpur",
-  "Asia/Singapore",
-  "Asia/Bangkok",
-  "Asia/Jakarta",
-  "Asia/Manila",
-  "Asia/Hong_Kong",
-  "Asia/Tokyo",
-  "Australia/Perth",
-  "UTC",
-];
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -62,155 +50,19 @@ export default async function SettingsPage() {
 
       {business?.slug && <PublicChatLink slug={business.slug} />}
 
-      <form
-        action={updateBusiness}
-        className="rounded-lg border border-border bg-surface p-6"
-      >
-        <div className="space-y-5">
-          <div>
-            <label
-              htmlFor="name"
-              className="mb-2 block text-sm font-medium text-text-secondary"
-            >
-              Business name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              defaultValue={business?.name ?? ""}
-              className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label
-                htmlFor="phone"
-                className="mb-2 block text-sm font-medium text-text-secondary"
-              >
-                Phone
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                defaultValue={business?.phone ?? ""}
-                className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-medium text-text-secondary"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                defaultValue={business?.email ?? ""}
-                className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="address"
-              className="mb-2 block text-sm font-medium text-text-secondary"
-            >
-              Address
-            </label>
-            <textarea
-              id="address"
-              name="address"
-              rows={3}
-              defaultValue={business?.address ?? ""}
-              className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="website"
-              className="mb-2 block text-sm font-medium text-text-secondary"
-            >
-              Website
-            </label>
-            <input
-              id="website"
-              name="website"
-              type="url"
-              defaultValue={business?.website ?? ""}
-              className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
-              placeholder="https://example.com"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="timezone"
-              className="mb-2 block text-sm font-medium text-text-secondary"
-            >
-              Timezone
-            </label>
-            <select
-              id="timezone"
-              name="timezone"
-              defaultValue={business?.timezone ?? "Asia/Kuala_Lumpur"}
-              className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary focus:border-accent focus:outline-none"
-            >
-              {timezones.map((timezone) => (
-                <option key={timezone} value={timezone}>
-                  {timezone}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <span className="mb-2 block text-sm font-medium text-text-secondary">
-              Languages
-            </span>
-            <div className="flex gap-6">
-              <label className="flex items-center gap-2 text-sm text-text-secondary">
-                <input
-                  type="checkbox"
-                  name="languages"
-                  value="English"
-                  defaultChecked={business?.languages?.includes("English") ?? true}
-                  className="h-4 w-4 rounded border-border bg-bg text-accent focus:ring-0"
-                />
-                English
-              </label>
-              <label className="flex items-center gap-2 text-sm text-text-secondary">
-                <input
-                  type="checkbox"
-                  name="languages"
-                  value="Bahasa Malaysia"
-                  defaultChecked={
-                    business?.languages?.includes("Bahasa Malaysia") ?? false
-                  }
-                  className="h-4 w-4 rounded border-border bg-bg text-accent focus:ring-0"
-                />
-                Bahasa Malaysia
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8 flex justify-end">
-          <button
-            type="submit"
-            className="rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-bg transition-colors hover:bg-accent/90"
-          >
-            Save profile
-          </button>
-        </div>
-      </form>
+      {business && (
+        <BusinessProfileForm
+          business={{
+            name: business.name,
+            phone: business.phone,
+            email: business.email,
+            address: business.address,
+            website: business.website,
+            timezone: business.timezone,
+            languages: business.languages ?? ["English"],
+          }}
+        />
+      )}
 
       <div className="mt-8 rounded-lg border border-border bg-surface p-6">
         <h2 className="text-lg font-medium tracking-tight text-text-primary">

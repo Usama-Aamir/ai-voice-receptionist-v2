@@ -58,7 +58,10 @@ export async function createBusiness(formData: FormData) {
   redirect("/dashboard");
 }
 
-export async function updateBusiness(formData: FormData) {
+export async function updateBusiness(
+  _prevState: { message: string; error: boolean },
+  formData: FormData
+) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -98,8 +101,11 @@ export async function updateBusiness(formData: FormData) {
 
   if (error) {
     console.error(error);
+    return { error: true, message: `Could not save profile: ${error.message}` };
   }
 
-  revalidatePath("/(dashboard)/settings", "page");
-  revalidatePath("/(dashboard)", "layout");
+  revalidatePath("/settings", "page");
+  revalidatePath("/dashboard", "page");
+
+  return { error: false, message: "Profile saved successfully." };
 }
