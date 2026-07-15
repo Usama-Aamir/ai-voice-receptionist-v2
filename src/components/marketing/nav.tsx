@@ -22,6 +22,12 @@ export function Nav() {
             How it works
           </Link>
           <Link
+            href="/solutions"
+            className="text-sm text-text-secondary transition-colors hover:text-text-primary"
+          >
+            Services
+          </Link>
+          <Link
             href="/login"
             className="inline-flex h-10 items-center justify-center rounded-lg border border-border px-4 text-sm font-medium text-text-primary transition-colors hover:border-text-secondary hover:bg-surface"
           >
@@ -83,6 +89,13 @@ export function Nav() {
               className="text-sm text-text-secondary transition-colors hover:text-text-primary"
             >
               How it works
+            </Link>
+            <Link
+              href="/solutions"
+              onClick={() => setOpen(false)}
+              className="text-sm text-text-secondary transition-colors hover:text-text-primary"
+            >
+              Services
             </Link>
             <Link
               href="/login"

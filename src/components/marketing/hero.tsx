@@ -1,3 +1,4 @@
+import { HeroVisual } from "@/components/marketing/hero-visual";
 import Link from "next/link";
 
 export function Hero() {
@@ -34,6 +35,7 @@ export function Hero() {
             See a live demo
           </Link>
         </div>
+        <HeroVisual />
       </div>
     </section>
   );
