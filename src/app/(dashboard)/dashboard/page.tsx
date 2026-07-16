@@ -1,4 +1,5 @@
 import { ChatWidget } from "@/components/chat/chat-widget";
+import { VoiceCard } from "@/components/dashboard/voice-card";
 import { createClient } from "@/lib/supabase/server";
 
 function todayInTimezone(timezone: string): string {
@@ -22,12 +23,13 @@ async function getStatCounts() {
       pendingAppointments: 0,
       weeklyConversations: 0,
       totalCustomers: 0,
+      businessPhone: null,
     };
   }
 
   const { data: business } = await supabase
     .from("businesses")
-    .select("timezone")
+    .select("timezone, phone")
     .in("id", ids)
     .limit(1)
     .single();
@@ -91,6 +93,7 @@ async function getStatCounts() {
     pendingAppointments,
     weeklyConversations,
     totalCustomers,
+    businessPhone: business?.phone ?? null,
   };
 }
 
@@ -130,6 +133,7 @@ export default async function DashboardPage() {
             </p>
           </div>
         ))}
+        <VoiceCard phone={counts.businessPhone} />
       </div>
 
       {businessId && (

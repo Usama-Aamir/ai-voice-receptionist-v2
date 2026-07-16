@@ -75,13 +75,14 @@ export function BusinessProfileForm({
               htmlFor="phone"
               className="mb-2 block text-sm font-medium text-text-secondary"
             >
-              Phone
+              Phone / voice receptionist number
             </label>
             <input
               id="phone"
               name="phone"
               type="tel"
               defaultValue={business.phone ?? ""}
+              placeholder="+60 12-345 6789"
               className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
             />
           </div>
